@@ -1,4 +1,15 @@
+import config from "../config/config.js";
 import User from "../model/user.model.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+// cookie options
+const cookieOptions = {
+	httpOnly: true,
+	secure: config.node_env === "production",
+	sameSite: config.node_env === "production" ? "none" : "lax",
+	maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
 
 export const register = async (req, res) => {
 	try {
@@ -13,11 +24,19 @@ export const register = async (req, res) => {
 			return res.status(400).json({ error: "User already exists" });
 		}
 
+		const hashedPassword = await bcrypt.hash(password, 10);
+
 		const user = await User.create({
 			name,
 			email,
-			password,
+			password: hashedPassword,
 		});
+
+		const token = jwt.sign({ id: user._id }, config.secret, {
+			expiresIn: "7d",
+		});
+
+		res.cookie("token", token, cookieOptions);
 
 		return res.status(200).json({
 			success: true,
@@ -50,10 +69,16 @@ export const login = async (req, res) => {
 			return res.status(400).json({ error: "Invalid credentials" });
 		}
 
-		const isMatch = password === user.password;
+		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			return res.status(400).json({ error: "Invalid credentials" });
 		}
+
+		const token = jwt.sign({ id: user._id }, config.secret, {
+			expiresIn: "7d",
+		});
+
+		res.cookie("token", token, cookieOptions);
 
 		return res.status(200).json({
 			success: true,
