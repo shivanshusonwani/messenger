@@ -3,17 +3,17 @@ import { Schema, model } from "mongoose";
 const messageSchema = new Schema(
 	{
 		conversationId: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: "Conversation",
 			required: true,
 		},
 		senderId: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: "User",
 			required: true,
 		},
 		receiverId: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: "User",
 			required: true,
 		},
