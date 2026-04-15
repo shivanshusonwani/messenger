@@ -1,11 +1,11 @@
-import React from "react";
+import Sidebar from "../components/Sidebar";
+import Chat from "../components/Chat";
 
 const Home = () => {
 	return (
-		<div>
-			Home Page
-			{/* sidebar */}
-			{/* chat section */}
+		<div className='h-screen flex'>
+			<Sidebar />
+			<Chat />
 		</div>
 	);
 };
