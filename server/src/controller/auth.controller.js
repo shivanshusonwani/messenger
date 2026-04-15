@@ -97,3 +97,23 @@ export const login = async (req, res) => {
 		});
 	}
 };
+
+export const logout = (req, res) => {
+	return res.clearCookie("token").status(200).json({
+		success: true,
+		message: "Logged out successfully",
+	});
+};
+
+export const getMe = async (req, res) => {
+	try {
+		const user = await User.findById(req.userId).select("-password");
+		res.status(200).json({ success: true, user });
+	} catch (error) {
+		res.status(500).json({
+			success: false,
+			message: "Unable to fetch user!",
+			error: error.message,
+		});
+	}
+};

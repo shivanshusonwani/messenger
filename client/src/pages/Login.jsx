@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
 	const [form, setForm] = useState({ email: "", password: "" });
+	const { login } = useAuth();
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setForm({ ...form, [e.target.name]: e.target.value });
@@ -9,7 +13,13 @@ const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(form);
+		try {
+			await login(form);
+			navigate("/");
+		} catch (err) {
+			console.error(err);
+			alert("Login failed");
+		}
 	};
 
 	return (
@@ -42,9 +52,11 @@ const Login = () => {
 				</button>
 				<p className='text-sm text-center'>
 					Don't have an account?{" "}
-					<span className='text-blue-600 font-semibold underline underline-offset-2 cursor-pointer'>
+					<Link
+						to='/register'
+						className='text-blue-600 font-semibold underline underline-offset-2 cursor-pointer'>
 						Sign Up
-					</span>
+					</Link>
 				</p>
 			</form>
 		</div>
