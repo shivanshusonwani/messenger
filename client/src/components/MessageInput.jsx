@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useSocket } from "../context/SocketContext";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../services/api";
 import { addMessage } from "../redux/messageSlice.js";
 
 const MessageInput = () => {
 	const [text, setText] = useState("");
+
+	const { socket } = useSocket();
 	const dispatch = useDispatch();
 	const { selectedUser } = useSelector((state) => state.user);
 
@@ -18,8 +21,13 @@ const MessageInput = () => {
 				message: text,
 			});
 
-			console.log(data.data);
+			// console.log(data.data);
 			dispatch(addMessage(data.data));
+
+			socket.emit("sendMessage", {
+				receiverId: selectedUser._id,
+				message: data,
+			});
 
 			setText("");
 		} catch (error) {
