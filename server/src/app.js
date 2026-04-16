@@ -4,16 +4,16 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./route/auth.routes.js";
 import userRoutes from "./route/user.routes.js";
 import messageRoutes from "./route/message.routes.js";
-
-const app = express();
+import { app, allowedOrigins } from "./sockets/socket.js";
 
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin: allowedOrigins,
 		credentials: true,
 	}),
 );
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/health", (req, res) => {
