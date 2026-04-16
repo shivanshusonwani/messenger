@@ -1,16 +1,33 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../context/AuthContext";
+import UsersList from "./UsersList";
+import API from "../services/api";
+import { setConversations } from "../redux/messageSlice";
 
 const Sidebar = () => {
 	const { logout } = useAuth();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const fetchConversations = async () => {
+			try {
+				const { data } = await API.get("/messages");
+				dispatch(setConversations(data));
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		fetchConversations();
+	}, []);
+
 	return (
 		<div className='w-75 border-r p-4 flex flex-col'>
 			<h2 className='text-lg font-bold mb-4'>Users</h2>
 
 			<div className='flex-1 space-y-2 overflow-y-auto'>
-				<p className='border'>User 1</p>
-				<p className='border'>User 2</p>
-				<p className='border'>User 3</p>
-				<p className='border'>User 4</p>
+				<UsersList />
 			</div>
 
 			<button
