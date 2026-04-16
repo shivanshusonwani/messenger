@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./route/auth.routes.js";
 import userRoutes from "./route/user.routes.js";
 import messageRoutes from "./route/message.routes.js";
-import { app, allowedOrigins } from "./sockets/socket.js";
+import { app, allowedOrigins } from "./socket/socket.js";
 
 app.use(
 	cors({
