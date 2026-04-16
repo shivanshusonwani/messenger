@@ -15,17 +15,17 @@ const messageSlice = createSlice({
 		addMessage: (state, action) => {
 			state.messages.push(action.payload);
 		},
-		setConversations: (state, action) => {
-			state.conversations = action.payload;
+		setConversation: (state, action) => {
+			state.conversation = action.payload;
 		},
 		clearMessages: (state) => {
 			state.messages = [];
-			state.conversations = [];
+			state.conversation = [];
 		},
 	},
 });
 
-export const { setMessages, addMessage, setConversations, clearMessages } =
+export const { setMessages, addMessage, setConversation, clearMessages } =
 	messageSlice.actions;
 
 export default messageSlice.reducer;

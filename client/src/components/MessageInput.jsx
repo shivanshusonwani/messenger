@@ -1,12 +1,30 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import API from "../services/api";
+import { addMessage } from "../redux/messageSlice.js";
 
 const MessageInput = () => {
 	const [text, setText] = useState("");
+	const dispatch = useDispatch();
+	const { selectedUser } = useSelector((state) => state.user);
 
 	const handleSend = async (e) => {
 		e.preventDefault();
 
-		console.log(text);
+		if (!text.trim()) return;
+
+		try {
+			const { data } = await API.post(`/messages/send/${selectedUser._id}`, {
+				message: text,
+			});
+
+			console.log(data.data);
+			dispatch(addMessage(data.data));
+
+			setText("");
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (

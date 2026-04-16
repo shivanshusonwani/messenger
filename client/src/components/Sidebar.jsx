@@ -3,23 +3,23 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import UsersList from "./UsersList";
 import API from "../services/api";
-import { setConversations } from "../redux/messageSlice";
+import { setConversation } from "../redux/messageSlice";
 
 const Sidebar = () => {
 	const { logout } = useAuth();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const fetchConversations = async () => {
+		const fetchConversation = async () => {
 			try {
 				const { data } = await API.get("/messages");
-				dispatch(setConversations(data));
+				dispatch(setConversation(data));
 			} catch (error) {
 				console.error(error);
 			}
 		};
 
-		fetchConversations();
+		fetchConversation();
 	}, []);
 
 	return (

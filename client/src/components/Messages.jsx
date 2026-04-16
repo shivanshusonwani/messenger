@@ -38,7 +38,7 @@ const Messages = () => {
 			)}
 
 			{messages.map((msg) => {
-				const isMe = msg.senderId === user?._id;
+				const isMe = msg.senderId === user?.data?.id;
 
 				return (
 					<div
