@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
 	const [form, setForm] = useState({
@@ -18,18 +19,20 @@ const Register = () => {
 		e.preventDefault();
 		try {
 			await register(form);
+			toast.success(`Welcome to the Messenger`);
 			navigate("/");
 		} catch (error) {
-			console.error(error);
-			alert("Registration failed");
+			const errorMessage =
+				err?.response?.data?.error || "Registration failed. Please try again.";
+			toast.error(errorMessage);
 		}
 	};
 
 	return (
-		<div className='h-screen flex items-center justify-center'>
+		<div className='h-screen flex items-center justify-center bg-gray-100'>
 			<form
 				onSubmit={handleSubmit}
-				className='w-80 p-6 border rounded-lg space-y-4'>
+				className='w-80 p-6 rounded-2xl shadow-md space-y-4 bg-white'>
 				<h2 className='text-xl font-bold text-center'>Register</h2>
 
 				<input

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
 	const [form, setForm] = useState({ email: "", password: "" });
@@ -15,18 +16,22 @@ const Login = () => {
 		e.preventDefault();
 		try {
 			await login(form);
+			toast.success(`Welcome back !`);
 			navigate("/");
 		} catch (err) {
-			console.error(err);
-			alert("Login failed");
+			// console.error(err?.response?.data?.error);
+			// alert("Login failed");
+			const errorMessage =
+				err?.response?.data?.error || "Login failed. Please try again.";
+			toast.error(errorMessage);
 		}
 	};
 
 	return (
-		<div className='h-screen flex items-center justify-center'>
+		<div className='h-screen flex items-center justify-center bg-gray-100'>
 			<form
 				onSubmit={handleSubmit}
-				className='w-80 p-6 border rounded-lg space-y-4'>
+				className='w-80 p-6 rounded-2xl shadow-md space-y-4 bg-white'>
 				<h2 className='text-xl font-bold text-center'>Login</h2>
 
 				<input

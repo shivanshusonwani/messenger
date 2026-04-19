@@ -34,7 +34,7 @@ const Messages = () => {
 	return (
 		<div className='flex-1 p-4 overflow-y-auto space-y-2'>
 			{messages.length === 0 && (
-				<p className='text-center text-gray-500'>No messages yet</p>
+				<p className='text-center pt-4 text-gray-500'>No messages yet</p>
 			)}
 
 			{messages.map((msg) => {
@@ -45,8 +45,10 @@ const Messages = () => {
 						key={msg._id}
 						className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
 						<div
-							className={`p-2 rounded max-w-[60%] ${
-								isMe ? "bg-black text-white" : "bg-gray-200 text-black"
+							className={`px-3 py-2 rounded-lg max-w-[60%] ${
+								isMe
+									? "bg-black text-white rounded-br-none"
+									: "bg-gray-200 text-black rounded-bl-none"
 							}`}>
 							{msg.message}
 						</div>

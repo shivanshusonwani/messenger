@@ -26,10 +26,14 @@ export const register = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
+		const userName = name.split(" ").join("").toLowerCase();
+		const avatar = `https://api.dicebear.com/9.x/thumbs/svg?seed=${userName}`;
+
 		const user = await User.create({
 			name,
 			email,
 			password: hashedPassword,
+			avatar,
 		});
 
 		const token = jwt.sign({ id: user._id }, config.secret, {

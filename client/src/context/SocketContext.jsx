@@ -33,7 +33,7 @@ export const SocketProvider = ({ children }) => {
 
 		// online users
 		newSocket.on("getOnlineUsers", (users) => {
-			console.log("Online users:", users);
+			// console.log("Online users:", users);
 			dispatch(setOnlineUsers(users));
 		});
 

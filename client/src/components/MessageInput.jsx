@@ -3,6 +3,8 @@ import { useSocket } from "../context/SocketContext";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../services/api";
 import { addMessage } from "../redux/messageSlice.js";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { IoSend } from "react-icons/io5";
 
 const MessageInput = () => {
 	const [text, setText] = useState("");
@@ -38,15 +40,17 @@ const MessageInput = () => {
 	return (
 		<form
 			onSubmit={handleSend}
-			className='p-4 border-t flex gap-2'>
+			className='p-4 flex gap-2'>
 			<input
 				type='text'
 				value={text}
 				onChange={(e) => setText(e.target.value)}
-				className='flex-1 p-2 border rounded'
+				className='flex-1 px-4 py-2 text-sm bg-gray-200 rounded-3xl outline-none'
 				placeholder='Type a message...'
 			/>
-			<button className='px-4 bg-black text-white rounded'>Send</button>
+			<button className='px-2 w-16 text-lg flex items-center justify-center bg-black text-white rounded-3xl cursor-pointer'>
+				<IoSend />
+			</button>
 		</form>
 	);
 };
