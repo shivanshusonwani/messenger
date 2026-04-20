@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext";
 import { useDispatch } from "react-redux";
 import { setOnlineUsers } from "../redux/userSlice";
 import { addMessage } from "../redux/messageSlice";
+import { baseURL } from "../services/api";
 
 const SocketContext = createContext();
 
@@ -17,11 +18,12 @@ export const SocketProvider = ({ children }) => {
 
 		if (!user?.data?.id) return;
 
-		const newSocket = io("http://localhost:8000", {
+		const newSocket = io(baseURL, {
 			query: {
 				userId: user?.data?.id,
 			},
 			withCredentials: true,
+			transports: ["websocket"],
 		});
 
 		console.log("Connecting with user:", user?.data?.id);
