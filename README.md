@@ -38,7 +38,7 @@ MongoDB.
 
 **Steps**
 1. Clone the repository
-  `git clone https://github.com/your-username/messenger.git`
+  `git clone https://github.com/shvanshusonwani/messenger.git`
 2. Install Backend Dependencies
   npm install
 3. Install Frontend Dependencies
